@@ -7,9 +7,3 @@ const tileObj = () => {
 
     return {marked, mark}
 }
-
-for (let i = 0; i < 9; i++) {
-    let tile = document.createElement("div")
-    tile.id = "tile"
-    boardElment.appendChild(tile)
-}
