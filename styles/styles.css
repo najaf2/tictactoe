@@ -16,15 +16,15 @@
     float: left;
 }
 
-#middle {
+#t5 {
     border: 1px solid;
 }
 
-#updown {
+#t4, #t6 {
     border-top: 1px solid;
     border-bottom: 1px solid;
 }
-#leftright {
+#t2, #t8 {
     border-left: 1px solid;
     border-right: 1px solid;
 }
