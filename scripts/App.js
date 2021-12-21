@@ -11,6 +11,8 @@ const t7 = document.getElementById("t7")
 const t8 = document.getElementById("t8")
 const t9 = document.getElementById("t9")
 
+let unbeatable = false
+
 const winningTable = [
                     [   true, true, true, 
                         false, false, false, 
@@ -58,10 +60,23 @@ const tileObj = (dom) => {
         if (!marked)
             dom.innerHTML = strMark
     };
-    return {dom, marked, setMark}
+    const checkMarked = () => {
+        return marked
+    }
+    return {dom, marked, setMark, checkMarked}
 }
 
+// Loop through and make 
+// each dom tile into a tile object
+for (let i = 0; i < tileDom.length; i++) {
+    let newObj = tileObj(tileDom[i])
+    tileObjArr.push(newObj)
+} 
+
+// Gameboard module to check if a board won
 const gameBoard = (() => {
+    // loop through all tiles and compare
+    // marks to winning lookup table
     const check = () => {
         for (let i = 0; i < winningTable.length; i++) {
             let currTile = 0
@@ -72,35 +87,56 @@ const gameBoard = (() => {
                 }
                 currTile++
             }   
-    
             if (won) {
                 console.log("WON")
                 break;
             }
         };
     };
-    return {check}  
+
+    const emptySpace = () => {
+        for (let i = 0; i < tileObjArr.length; i++) {
+            if (!tileObjArr[i].marked) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // computer turn
+    const cpuTurn = () => {
+        // random logic
+        if (!unbeatable) { 
+            let random = Math.floor(Math.random() * 9)
+            console.log(random)
+            console.log(tileObjArr)
+            console.log(tileObjArr[random])
+
+            while(tileObjArr[random].marked) {
+                random = Math.floor(Math.random() * 9)
+            }
+
+            tileObjArr[random].setMark("o")
+            tileObjArr[random].marked = true;
+
+        }
+    }; 
+
+    return {check, cpuTurn, emptySpace}  
 })();
 
-// Loop through and make 
-// each dom tile into a tile object
-for (let i = 0; i < tileDom.length; i++) {
-    let newObj = tileObj(tileDom[i])
-    tileObjArr.push(newObj)
-} 
-
 // loop through and add a
-// click event listener to each tile
+// click event listener to econsole.log(gameBoard.emptySpace())ch tile
 for (let i = 0; i < tileObjArr.length; i++) {
     tileObjArr[i].dom.addEventListener("click", function() {
         if (tileObjArr[i].marked == false) {
             tileObjArr[i].setMark("x")
             tileObjArr[i].marked = true;
             gameBoard.check()
+            if (gameBoard.emptySpace()) {
+                gameBoard.cpuTurn();
+            }
         }
     });
 }
-
-// loop through all tiles and compare
-// marks to winning lookup table
-
