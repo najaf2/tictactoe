@@ -12,9 +12,38 @@ const t8 = document.getElementById("t8")
 const t9 = document.getElementById("t9")
 
 const winningTable = [
-                    [true, true, true, false, false, false, false, false, false],
-                    [false, false, false, true, true, true, false, false, false],
-                    [false, false, false, false, false, false, true, true, true],
+                    [   true, true, true, 
+                        false, false, false, 
+                        false, false, false
+                    ],
+                    [   false, false, false, 
+                        true, true, true, 
+                        false, false, false
+                    ],
+                    [   false, false, false, 
+                        false, false, false, 
+                        true, true, true
+                    ],
+                    [   true, false, false, 
+                        true, false, false, 
+                        true, false, false
+                    ],
+                    [   false, true, false, 
+                        false, true, false, 
+                        false, true, false
+                    ],
+                    [   false, false, true, 
+                        false, false, true, 
+                        false, false, true
+                    ],
+                    [   true, false, false, 
+                        false, true, false, 
+                        false, false, true
+                    ],
+                    [   false, false, true, 
+                        false, true, false, 
+                        true, false, false
+                    ],
                 ]
 
 // make a list of all dom tiles and object tiles
