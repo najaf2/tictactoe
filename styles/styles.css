@@ -1,6 +1,7 @@
 #parent {
     width: 330px;
     margin:0 auto;
+    font-family: monospace;
 }
 
 #board {
@@ -14,17 +15,21 @@
     width: 100px;
     height: 100px;
     float: left;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
 }
 
 #t5 {
-    border: 1px solid;
+    border: 5px solid;
 }
 
 #t4, #t6 {
-    border-top: 1px solid;
-    border-bottom: 1px solid;
+    border-top: 5px solid;
+    border-bottom: 5px solid;
 }
 #t2, #t8 {
-    border-left: 1px solid;
-    border-right: 1px solid;
+    border-left: 5px solid;
+    border-right: 5px solid;
 }
