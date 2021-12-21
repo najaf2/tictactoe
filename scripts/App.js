@@ -77,18 +77,22 @@ for (let i = 0; i < tileDom.length; i++) {
 const gameBoard = (() => {
     // loop through all tiles and compare
     // marks to winning lookup table
-    const check = () => {
+    const check = (str) => {
         for (let i = 0; i < winningTable.length; i++) {
             let currTile = 0
             let won = true
             for (let j = 0; j < winningTable[i].length; ++j) {
-                if (winningTable[i][j] === true && tileObjArr[currTile].marked === false) {
+                let correctMark = false;
+                if (tileObjArr[currTile].marked && tileObjArr[currTile].dom.innerHTML == str) {
+                    correctMark = true;
+                }
+                if (winningTable[i][j] == true && correctMark == false) {
                     won = false;
                 }
                 currTile++
             }   
             if (won) {
-                console.log("WON")
+                console.log(str + "WON")
                 break;
             }
         };
@@ -109,17 +113,11 @@ const gameBoard = (() => {
         // random logic
         if (!unbeatable) { 
             let random = Math.floor(Math.random() * 9)
-            console.log(random)
-            console.log(tileObjArr)
-            console.log(tileObjArr[random])
-
             while(tileObjArr[random].marked) {
                 random = Math.floor(Math.random() * 9)
             }
-
             tileObjArr[random].setMark("o")
             tileObjArr[random].marked = true;
-
         }
     }; 
 
@@ -133,10 +131,17 @@ for (let i = 0; i < tileObjArr.length; i++) {
         if (tileObjArr[i].marked == false) {
             tileObjArr[i].setMark("x")
             tileObjArr[i].marked = true;
-            gameBoard.check()
+            gameBoard.check("x")
+
             if (gameBoard.emptySpace()) {
                 gameBoard.cpuTurn();
+                gameBoard.check("o")
             }
         }
     });
 }
+
+// TODO
+// DIFFERENTIATE WINNING CONDITIONS FOR PLAYER AND CPU
+// ADD TIE CONDITION
+// ADD UNBEATABLE PLAYER
