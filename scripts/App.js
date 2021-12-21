@@ -55,10 +55,32 @@ let tileObjArr = []
 const tileObj = (dom) => {
     let marked = false
     const setMark = (strMark) => {
-        dom.innerHTML = strMark
+        if (!marked)
+            dom.innerHTML = strMark
     };
     return {dom, marked, setMark}
 }
+
+const gameBoard = (() => {
+    const check = () => {
+        for (let i = 0; i < winningTable.length; i++) {
+            let currTile = 0
+            let won = true
+            for (let j = 0; j < winningTable[i].length; ++j) {
+                if (winningTable[i][j] === true && tileObjArr[currTile].marked === false) {
+                    won = false;
+                }
+                currTile++
+            }   
+    
+            if (won) {
+                console.log("WON")
+                break;
+            }
+        };
+    };
+    return {check}  
+})();
 
 // Loop through and make 
 // each dom tile into a tile object
@@ -71,29 +93,14 @@ for (let i = 0; i < tileDom.length; i++) {
 // click event listener to each tile
 for (let i = 0; i < tileObjArr.length; i++) {
     tileObjArr[i].dom.addEventListener("click", function() {
-        tileObjArr[i].setMark("x")
-        tileObjArr[i].marked = true;
-        check()
+        if (tileObjArr[i].marked == false) {
+            tileObjArr[i].setMark("x")
+            tileObjArr[i].marked = true;
+            gameBoard.check()
+        }
     });
 }
 
 // loop through all tiles and compare
 // marks to winning lookup table
-function check() {
-    for (let i = 0; i < winningTable.length; i++) {
-        let currTile = 0
-        let won = true
-        for (let j = 0; j < winningTable[i].length; ++j) {
-            if (winningTable[i][j] === true && tileObjArr[currTile].marked === false) {
-                won = false;
-            }
-            currTile++
-        }   
-
-        if (won) {
-            console.log("WON")
-            break;
-        }
-    }
-}
 
