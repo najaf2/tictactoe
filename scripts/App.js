@@ -38,6 +38,11 @@ for (let i = 0; i < tileDom.length; i++) {
 for (let i = 0; i < tileObjArr.length; i++) {
     tileObjArr[i].dom.addEventListener("click", function() {
         tileObjArr[i].setMark("x")
+        tileObjArr[i].marked = true;
     });
 }
 
+let winningTable = [[true, true, true, false, false, false, false, false, false],
+                    [false, false, false, true, true, true, false, false, false],
+                    [false, false, false, false, false, false, true, true, true],
+                ]
