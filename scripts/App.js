@@ -1,5 +1,6 @@
 // Set up board and tiles
 const boardElment = document.getElementById("board")
+const restart = document.getElementById("restart")
 
 const t1 = document.getElementById("t1")
 const t2 = document.getElementById("t2")
@@ -100,13 +101,36 @@ const gameBoard = (() => {
                 console.log(str + "WON")
                 play = false
                 winningTiles.forEach((elem) => {elem.dom.style.color = "red"})
-                break;
+                restartIcon()
+                break
             }
 
             winningTiles.length = 0
 
         };
     };
+    
+    // have the restart button appear
+    const restartIcon = () => {
+        restart.style.display = "inline"
+        restart.classList.add("fade-in-text")
+        restart.addEventListener("click", function() {
+            clear()
+        })
+    }
+
+    // clear the gameboard
+    const clear = () => {
+        play = true
+        restart.style.display = "none"
+        restart.classList.remove("fade-in-text")
+
+        tileObjArr.forEach((elem) => {
+            elem.marked = false
+            elem.dom.innerHTML = ""
+            elem.dom.style.color = "black"
+        })
+    }
 
     // check if there are empty spaces left on the board
     const emptySpace = () => {
@@ -131,8 +155,9 @@ const gameBoard = (() => {
         }
     }; 
 
-    return {play, check, cpuTurn, emptySpace}  
+    return {play, check, cpuTurn, emptySpace, restartIcon}  
 })();
+
 
 // loop through and add a
 // click event listener to each tile
@@ -154,7 +179,7 @@ for (let i = 0; i < tileObjArr.length; i++) {
                 
                 if (play) {
                     play = false
-                    console.log("TIE")
+                    gameBoard.restartIcon()
                 }
             }
             
