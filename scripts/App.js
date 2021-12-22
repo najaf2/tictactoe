@@ -134,18 +134,21 @@ const gameBoard = (() => {
 
     // check if there are empty spaces left on the board
     const emptySpace = () => {
+        let spaces = 0
+        let avalaible = []
         for (let i = 0; i < tileObjArr.length; i++) {
             if (!tileObjArr[i].marked) {
-                return true;
+                spaces++;
+                avalaible.push(tileObjArr[i])
             }
         }
-        return false;
+        return {spaces, avalaible};
     }
 
     // computer turn
     const cpuTurn = () => {
         // random logic
-        if (!unbeatable) { 
+        const random = () => { 
             let random = Math.floor(Math.random() * 9)
             while(tileObjArr[random].marked) {
                 random = Math.floor(Math.random() * 9)
@@ -153,6 +156,40 @@ const gameBoard = (() => {
             tileObjArr[random].setMark("o")
             tileObjArr[random].marked = true;
         }
+
+        const better = () =>  {
+            for (let i = 0; i < winningTable.length; i++) {
+                let winningTiles = []
+                for (let j = 0; j < winningTable[i].length; ++j) {
+                    if (winningTable[i][j]) {
+                        let correctMark = false;
+                        if (tileObjArr[j].marked && tileObjArr[j].dom.innerHTML == "o") {
+                            correctMark = true;
+                            winningTiles.push(tileObjArr[j])
+                        }
+                    }
+                } 
+                console.log(winningTiles.length)
+                if (winningTiles.length == 2) {
+                    for (let n = 0; n < winningTable[i].length; ++n) {
+                        if (winningTable[i][n]) {
+                            if (!tileObjArr[n].marked) {
+                                console.log("Found winning move")
+                                tileObjArr[n].setMark("o")
+                                tileObjArr[n].marked = true;
+                                return
+                            }
+                        }
+                    }
+                }
+                else {
+                    winningTiles.length = 0
+                }  
+            };
+            random()
+        }
+
+        return {random, better}
     }; 
 
     return {play, check, cpuTurn, emptySpace, restartIcon}  
@@ -168,18 +205,19 @@ for (let i = 0; i < tileObjArr.length; i++) {
             tileObjArr[i].marked = true;
             gameBoard.check.apply(null, ["x", "o"])
 
-            if (gameBoard.emptySpace() && play) {
-                gameBoard.cpuTurn();
+            if (gameBoard.emptySpace().spaces > 0 && play) {
+                gameBoard.cpuTurn().better();
                 gameBoard.check.apply(null, ["o", "x"])
                 
             }
 
-            if (!gameBoard.emptySpace()) {
+            if (gameBoard.emptySpace().spaces == 0) {
                 gameBoard.check.apply(null, ["o", "x"])
                 
                 if (play) {
                     play = false
                     gameBoard.restartIcon()
+                    console.log("Tie")
                 }
             }
             
