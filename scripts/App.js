@@ -188,7 +188,7 @@ const gameBoard = (() => {
             };
 
             for (let i = 0; i < winningTable.length; i++) {
-                let winningTiles = []
+                let winningTiles = [];
                 for (let j = 0; j < winningTable[i].length; ++j) {
                     if (winningTable[i][j]) {
                         let correctMark = false;
