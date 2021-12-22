@@ -186,6 +186,36 @@ const gameBoard = (() => {
                     winningTiles.length = 0
                 }  
             };
+
+            for (let i = 0; i < winningTable.length; i++) {
+                let winningTiles = []
+                for (let j = 0; j < winningTable[i].length; ++j) {
+                    if (winningTable[i][j]) {
+                        let correctMark = false;
+                        if (tileObjArr[j].marked && tileObjArr[j].dom.innerHTML == "x") {
+                            correctMark = true;
+                            winningTiles.push(tileObjArr[j])
+                        }
+                    }
+                } 
+                console.log(winningTiles.length)
+                if (winningTiles.length == 2) {
+                    for (let n = 0; n < winningTable[i].length; ++n) {
+                        if (winningTable[i][n]) {
+                            if (!tileObjArr[n].marked) {
+                                console.log("Found defending move")
+                                tileObjArr[n].setMark("o")
+                                tileObjArr[n].marked = true;
+                                return
+                            }
+                        }
+                    }
+                }
+                else {
+                    winningTiles.length = 0
+                }  
+            };
+
             random()
         }
 
