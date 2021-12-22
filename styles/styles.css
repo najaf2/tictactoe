@@ -1,5 +1,6 @@
 body {
     background-color: rgb(255, 217, 167);
+    font-family: monospace;
 }
 #parent {
     margin: auto;
@@ -30,16 +31,16 @@ body {
 }
 
 #t5 {
-    border: 5px solid;
+    border: 5px solid black;
 }
 
 #t4, #t6 {
-    border-top: 5px solid;
-    border-bottom: 5px solid;
+    border-top: 5px solid black;
+    border-bottom: 5px solid black;
 }
 #t2, #t8 {
-    border-left: 5px solid;
-    border-right: 5px solid;
+    border-left: 5px solid black;
+    border-right: 5px solid black;
 }
 
 h1 {
@@ -50,5 +51,6 @@ h1 {
     text-align: center;
     line-height: 250px;
     text-align: center;
+    font-size: 38px;
     
 }

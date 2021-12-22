@@ -80,23 +80,33 @@ const gameBoard = (() => {
     // marks to winning lookup table
     const check = (str) => {
         for (let i = 0; i < winningTable.length; i++) {
-            let currTile = 0
             let won = true
+            let winningTiles = []
             for (let j = 0; j < winningTable[i].length; ++j) {
-                let correctMark = false;
-                if (tileObjArr[currTile].marked && tileObjArr[currTile].dom.innerHTML == str) {
-                    correctMark = true;
+                if (winningTable[i][j]) {
+                    if (j >= winningTable[i].length) {break}
+
+                    let correctMark = false;
+                    if (tileObjArr[j].marked && tileObjArr[j].dom.innerHTML == str) {
+                        correctMark = true;
+                        winningTiles.push(tileObjArr[j])
+                    }
+                    if (winningTable[i][j] == true && !correctMark) {
+                        won = false;
+                        winningTiles.length = 0
+                        break
+                    }
                 }
-                if (winningTable[i][j] == true && correctMark == false) {
-                    won = false;
-                }
-                currTile++
             }   
             if (won) {
                 console.log(str + "WON")
                 play = false
+                winningTiles.forEach((elem) => {elem.dom.style.color = "red"})
                 break;
             }
+
+            winningTiles.length = 0
+
         };
     };
 
