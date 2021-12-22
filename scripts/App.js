@@ -74,7 +74,7 @@ for (let i = 0; i < tileDom.length; i++) {
     tileObjArr.push(newObj)
 } 
 
-// Gameboard module to check if a board won
+// Gameboard module
 const gameBoard = (() => {
     // loop through all tiles and compare
     // marks to winning lookup table
@@ -100,13 +100,14 @@ const gameBoard = (() => {
         };
     };
 
+    // check if there are empty spaces left on the board
     const emptySpace = () => {
         for (let i = 0; i < tileObjArr.length; i++) {
             if (!tileObjArr[i].marked) {
                 return true;
             }
         }
-
+        play = false
         return false;
     }
 
@@ -127,20 +128,21 @@ const gameBoard = (() => {
 })();
 
 // loop through and add a
-// click event listener to econsole.log(gameBoard.emptySpace())ch tile
+// click event listener to each tile
 for (let i = 0; i < tileObjArr.length; i++) {
     tileObjArr[i].dom.addEventListener("click", function() {
         if (tileObjArr[i].marked == false && play) {
             tileObjArr[i].setMark("x")
             tileObjArr[i].marked = true;
-            gameBoard.check("x")
+            gameBoard.check.apply(null, ["x", "o"])
 
             if (gameBoard.emptySpace() && play) {
                 gameBoard.cpuTurn();
-                gameBoard.check("o")
+                gameBoard.check.apply(null, ["o", "x"])
+                
             }
 
-            if (!gameBoard.emptySpace()) {
+            if (!gameBoard.emptySpace() && play) {
                 console.log("TIE")
             }
         }
@@ -148,6 +150,5 @@ for (let i = 0; i < tileObjArr.length; i++) {
 }
 
 // TODO
-// MAKE IT SO PLAYERS CAN'T PLAY AFTER A WIN OR TIE
 // CLEAN UP CODE
 // ADD UNBEATABLE PLAYER
