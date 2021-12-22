@@ -12,6 +12,7 @@ const t8 = document.getElementById("t8")
 const t9 = document.getElementById("t9")
 
 let unbeatable = false
+let play = true
 
 const winningTable = [
                     [   true, true, true, 
@@ -93,6 +94,7 @@ const gameBoard = (() => {
             }   
             if (won) {
                 console.log(str + "WON")
+                play = false
                 break;
             }
         };
@@ -121,27 +123,31 @@ const gameBoard = (() => {
         }
     }; 
 
-    return {check, cpuTurn, emptySpace}  
+    return {play, check, cpuTurn, emptySpace}  
 })();
 
 // loop through and add a
 // click event listener to econsole.log(gameBoard.emptySpace())ch tile
 for (let i = 0; i < tileObjArr.length; i++) {
     tileObjArr[i].dom.addEventListener("click", function() {
-        if (tileObjArr[i].marked == false) {
+        if (tileObjArr[i].marked == false && play) {
             tileObjArr[i].setMark("x")
             tileObjArr[i].marked = true;
             gameBoard.check("x")
 
-            if (gameBoard.emptySpace()) {
+            if (gameBoard.emptySpace() && play) {
                 gameBoard.cpuTurn();
                 gameBoard.check("o")
+            }
+
+            if (!gameBoard.emptySpace()) {
+                console.log("TIE")
             }
         }
     });
 }
 
 // TODO
-// DIFFERENTIATE WINNING CONDITIONS FOR PLAYER AND CPU
-// ADD TIE CONDITION
+// MAKE IT SO PLAYERS CAN'T PLAY AFTER A WIN OR TIE
+// CLEAN UP CODE
 // ADD UNBEATABLE PLAYER
