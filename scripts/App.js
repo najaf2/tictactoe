@@ -107,7 +107,6 @@ const gameBoard = (() => {
                 return true;
             }
         }
-        play = false
         return false;
     }
 
@@ -142,13 +141,18 @@ for (let i = 0; i < tileObjArr.length; i++) {
                 
             }
 
-            if (!gameBoard.emptySpace() && play) {
-                console.log("TIE")
+            if (!gameBoard.emptySpace()) {
+                gameBoard.check.apply(null, ["o", "x"])
+                
+                if (play) {
+                    play = false
+                    console.log("TIE")
+                }
             }
+            
         }
     });
 }
 
 // TODO
-// CLEAN UP CODE
 // ADD UNBEATABLE PLAYER
