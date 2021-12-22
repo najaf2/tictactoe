@@ -84,14 +84,12 @@ const gameBoard = (() => {
             let winningTiles = []
             for (let j = 0; j < winningTable[i].length; ++j) {
                 if (winningTable[i][j]) {
-                    if (j >= winningTable[i].length) {break}
-
                     let correctMark = false;
                     if (tileObjArr[j].marked && tileObjArr[j].dom.innerHTML == str) {
                         correctMark = true;
                         winningTiles.push(tileObjArr[j])
                     }
-                    if (winningTable[i][j] == true && !correctMark) {
+                    if (!correctMark) {
                         won = false;
                         winningTiles.length = 0
                         break
